@@ -1,0 +1,63 @@
+# depslib dependency file v1.0
+1714750731 source:c:\users\admin\onedrive\documents\ltnc\gameproject\main.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"graphics.h"
+	"defs.h"
+	"map.h"
+	"input.h"
+	"game.h"
+	"entity.h"
+	"menu.h"
+
+1714037151 c:\users\admin\onedrive\documents\ltnc\gameproject\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	"defs.h"
+
+1714292712 c:\users\admin\onedrive\documents\ltnc\gameproject\defs.h
+
+1714052854 c:\users\admin\onedrive\documents\ltnc\gameproject\map.h
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+	"sprite.h"
+
+1711115703 c:\users\admin\onedrive\documents\ltnc\gameproject\input.h
+	<SDL.h>
+	"defs.h"
+
+1714790100 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"defs.h"
+	"entity.h"
+	"graphics.h"
+
+1714132367 c:\users\admin\onedrive\documents\ltnc\gameproject\entity.h
+	"sprite.h"
+	"map.h"
+	"defs.h"
+
+1713960587 c:\users\admin\onedrive\documents\ltnc\gameproject\sprite.h
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+
+1714388833 c:\users\admin\onedrive\documents\ltnc\gameproject\menu.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	"graphics.h"
+	"defs.h"
+	"game.h"
+
