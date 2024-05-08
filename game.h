@@ -5,26 +5,30 @@
 #include<SDL.h>
 #include<SDL_image.h>
 #include<SDL_ttf.h>
+#include<SDL_mixer.h>
 #include"defs.h"
 #include"entity.h"
 #include"graphics.h"
+#include"sound.h"
 
 using namespace std;
 
 struct Game{
-    Entity player, angel_1, angel_2, angel_3, angel_4, angel_5, chest_1, chest_2, chest_3, chest_4, chest_5, chest_6, chest_7, key_1, key_2, key_3, key_4, key_5, key_6, key_7, portal, skeleton, flyingEye, boss;
+    Entity player, angel_1, angel_2, angel_3, angel_4, angel_5, chest_1, chest_2, chest_3, chest_4, chest_5, chest_6, chest_7, key_1, key_2, key_3, key_4, key_5, key_6, key_7, portal, skeleton1, skeleton2, flyingEye1, flyingEye2, boss;
     Entity spikeTrap1, spikeTrap2, spikeTrap3, spikeTrap4, spikeTrap5, spearTrap1, spearTrap2, shooter1, shooter2, shooter3, shooter4, spell;
-    list<Entity*> skills, bullets_1, bullets_2, bullets_3, bullets_4, bullets_5, arrow1, arrow2, arrow3, arrow4, swords, bombs, bossSkills;
+    list<Entity*> skills, bullets_1, bullets_2, bullets_3, bullets_4, bullets_5, arrow1, arrow2, arrow3, arrow4, swords1, bombs1, swords2, bombs2, bossSkills;
     SDL_Texture* skillTexture, *enemyBulletTexture_1, *enemyBulletTexture_2, *healthBar[11], *keyTextTexure, *keyTexture, *portalTexture, *arrowTexture, *swordTexture, *bombTexture, *bossSkillTexture1, *bossHealthTextTexrture;
     SDL_Texture* warningTextTexture, *healthTexture, *bossNameTexture, *timeTexture, *spellTexture1, *spellTexture2;
     SDL_Color textColor, healthTextColor, nameColor;
     TTF_Font* textFont, *textFont2;
     stringstream keyText1, keyText2, bossHealthText, bossName, timeText, warningText;
-    int keyCount1, keyCount2, gameStatus = 0, jumpCount = 0;
-    Uint32 lastTrapDropTime1 = 0, lastTrapDropTime1_1 = 0, lastTrapDropTime2 = 0, lastTrapDropTime2_1 = 0, arrowSpawnTime1 = 0, arrowSpawnTime2 = 0, arrowSpawnTime3 = 0, arrowSpawnTime4 = 0, swordSpawnTime = 0, bombSpawnTime = 0, bossSkillSpawnTime, spellSpawnTime, time;
+    int keyCount1, keyCount2, gameStatus = 0, jumpCount = 0, soundStatus = 0;
+    Uint32 lastTrapDropTime1 = 0, lastTrapDropTime1_1 = 0, lastTrapDropTime2 = 0, lastTrapDropTime2_1 = 0, arrowSpawnTime1 = 0, arrowSpawnTime2 = 0, arrowSpawnTime3 = 0, arrowSpawnTime4 = 0, swordSpawnTime = 0, swordSpawnTime2 = 0, bombSpawnTime = 0, bossSkillSpawnTime, spellSpawnTime, time;
     Uint32 dashReloadTime = 0, skillReloadTime = 0;
+    Mix_Chunk* angelAttack1, *angelAttack2, *bossAttack, *bossSpell, *flyingEyeAttack, *skeletonAttack, *playerAttack, *playerRun, *playerJump;
+    Mix_Music* stage1, *stage2;
 
-    void init(Graphics& graphic){
+    void init(Graphics& graphic, Sound& sound){
         initPlayer();
         initFirstAngel();
         initSecondAngel();
@@ -43,8 +47,9 @@ struct Game{
         initShooter3();
         initShooter4();
         initSkeleton();
+        initSkeleton2();
         initFlyingEye();
-        initBoss(); asdagadsafasfa
+        initBoss();
         player.attackSprite.spriteSheetTexture = graphic.loadTexture("Wizard//Attack1.png");
         player.idleSprite.spriteSheetTexture = graphic.loadTexture("Wizard//Idle1.png");
         player.runSprite.spriteSheetTexture = graphic.loadTexture("Wizard//Run1.png");
@@ -144,14 +149,18 @@ struct Game{
         shooter3.idleSprite.init(SHOOTER_TRAP_CLIPS,SHOOTER_TRAP_FRAMES);
         shooter4.idleSprite.spriteSheetTexture = graphic.loadTexture("Tiles2//Shooter.png");
         shooter4.idleSprite.init(SHOOTER_TRAP_CLIPS,SHOOTER_TRAP_FRAMES);
-        skeleton.attackSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Attack.png");
-        skeleton.idleSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Idle.png");
-        skeleton.runSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Walk.png");
-        skeleton.hurtSprite.spriteSheetTexture = graphic.loadTexture("Skeleton///Hurt.png");
+        skeleton1.attackSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Attack.png");
+        skeleton1.idleSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Idle.png");
+        skeleton1.runSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Walk.png");
+        skeleton1.hurtSprite.spriteSheetTexture = graphic.loadTexture("Skeleton///Hurt.png");
+        skeleton2.attackSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Attack.png");
+        skeleton2.idleSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Idle.png");
+        skeleton2.runSprite.spriteSheetTexture = graphic.loadTexture("Skeleton//Walk.png");
+        skeleton2.hurtSprite.spriteSheetTexture = graphic.loadTexture("Skeleton///Hurt.png");
         swordTexture = graphic.loadTexture("Skeleton//Sword.png");
-        flyingEye.idleSprite.spriteSheetTexture = graphic.loadTexture("Flying Eye//Flight.png");
-        flyingEye.attackSprite.spriteSheetTexture = graphic.loadTexture("Flying Eye//Attack.png");
-        flyingEye.hurtSprite.spriteSheetTexture = graphic.loadTexture("Flying Eye//Hurt.png");
+        flyingEye1.idleSprite.spriteSheetTexture = graphic.loadTexture("Flying Eye//Flight.png");
+        flyingEye1.attackSprite.spriteSheetTexture = graphic.loadTexture("Flying Eye//Attack.png");
+        flyingEye1.hurtSprite.spriteSheetTexture = graphic.loadTexture("Flying Eye//Hurt.png");
         bombTexture = graphic.loadTexture("Flying Eye//Bomb.png");
         boss.attackSprite.spriteSheetTexture = graphic.loadTexture("Boss//Attack.png");
         boss.idleSprite.spriteSheetTexture = graphic.loadTexture("Boss//Idle.png");
@@ -163,6 +172,17 @@ struct Game{
         healthTexture = graphic.loadTexture("Boss//Health.png");
         nameColor = {170, 100, 200, 0};
         spellTexture2 = graphic.loadTexture("Boss//Spell.2.png");
+        angelAttack1 = sound.loadSoundEffect("Sound//Angel1Attack.wav");
+        angelAttack2 = sound.loadSoundEffect("Sound//Angel2Attack.wav");
+        bossAttack = sound.loadSoundEffect("Sound//BossAttack.wav");
+        bossSpell = sound.loadSoundEffect("Sound//BossSpell.wav");
+        flyingEyeAttack = sound.loadSoundEffect("Sound//FlyingEyeAttack.wav");
+        skeletonAttack = sound.loadSoundEffect("Sound//SkeletonAttack.wav");
+        playerAttack = sound.loadSoundEffect("Sound//PlayerAttack.wav");
+        playerRun = sound.loadSoundEffect("Sound//PlayerRun.wav");
+        playerJump = sound.loadSoundEffect("Sound//PlayerJump.wav");
+        stage1 = sound.loadMusic("Sound//Stage1.wav");
+        stage2 = sound.loadMusic("Sound//Stage2.wav");
     }
 
     void init2(){
@@ -185,6 +205,7 @@ struct Game{
         initShooter3();
         initShooter4();
         initSkeleton();
+        initSkeleton2();
         initFlyingEye();
         initBoss();
         key_1.health = 1;
@@ -364,38 +385,56 @@ struct Game{
     }
 
     void initSkeleton(){
-        skeleton.attackSprite.init(SKELETON_ATTACK_CLIPS, SKELETON_ATTACK_FRAMES);
-        skeleton.idleSprite.init(SKELETON_IDLE_CLIPS, SKELETON_IDLE_FRAMES);
-        skeleton.runSprite.init(SKELETON_WALK_CLIPS, SKELETON_WALK_FRAMES);
-        skeleton.hurtSprite.init(SKELETON_HURT_CLIPS, SKELETON_HURT_FRAMES);
-        skeleton.health = 5;
-        skeleton.attackStatus = 0;
-        skeleton.moveStatus = 0;
-        skeleton.w = 75;
-        skeleton.h = 86;
-        skeleton.x = 800;
-        skeleton.y = 362;
-        skeleton.dx = 2;
-        skeleton.dy = 0;
-        skeleton.firstPos = skeleton.x;
-        skeleton.flip= SDL_FLIP_NONE;
+        skeleton1.attackSprite.init(SKELETON_ATTACK_CLIPS, SKELETON_ATTACK_FRAMES);
+        skeleton1.idleSprite.init(SKELETON_IDLE_CLIPS, SKELETON_IDLE_FRAMES);
+        skeleton1.runSprite.init(SKELETON_WALK_CLIPS, SKELETON_WALK_FRAMES);
+        skeleton1.hurtSprite.init(SKELETON_HURT_CLIPS, SKELETON_HURT_FRAMES);
+        skeleton1.health = 5;
+        skeleton1.attackStatus = 0;
+        skeleton1.moveStatus = 0;
+        skeleton1.w = 75;
+        skeleton1.h = 86;
+        skeleton1.x = 800;
+        skeleton1.y = 362;
+        skeleton1.dx = 2;
+        skeleton1.dy = 0;
+        skeleton1.firstPos = skeleton1.x;
+        skeleton1.flip= SDL_FLIP_NONE;
+    }
+
+    void initSkeleton2(){
+        skeleton2.attackSprite.init(SKELETON_ATTACK_CLIPS, SKELETON_ATTACK_FRAMES);
+        skeleton2.idleSprite.init(SKELETON_IDLE_CLIPS, SKELETON_IDLE_FRAMES);
+        skeleton2.runSprite.init(SKELETON_WALK_CLIPS, SKELETON_WALK_FRAMES);
+        skeleton2.hurtSprite.init(SKELETON_HURT_CLIPS, SKELETON_HURT_FRAMES);
+        skeleton2.health = 5;
+        skeleton2.attackStatus = 0;
+        skeleton2.moveStatus = 0;
+        skeleton2.w = 75;
+        skeleton2.h = 86;
+        skeleton2.x = 500;
+        skeleton2.y = 106;
+        skeleton2.dx = 2;
+        skeleton2.dy = 0;
+        skeleton2.firstPos = skeleton2.x;
+        skeleton2.flip= SDL_FLIP_NONE;
     }
 
     void initFlyingEye(){
-        flyingEye.attackSprite.init(EYE_ATTACK_CLIPS, EYE_ATTACK_FRAMES);
-        flyingEye.idleSprite.init(EYE_IDLE_CLIPS, EYE_IDLE_FRAMES);
-        flyingEye.hurtSprite.init(EYE_HURT_CLIPS, EYE_HURT_FRAMES);
-        flyingEye.health = 5;
-        flyingEye.attackStatus = 0;
-        flyingEye.moveStatus = 0;
-        flyingEye.w = 70;
-        flyingEye.h = 55;
-        flyingEye.x = 500;
-        flyingEye.y = 260;
-        flyingEye.dx = 2;
-        flyingEye.dy = 0;
-        flyingEye.firstPos = flyingEye.x;
-        flyingEye.flip = SDL_FLIP_NONE;
+        flyingEye1.attackSprite.init(EYE_ATTACK_CLIPS, EYE_ATTACK_FRAMES);
+        flyingEye1.idleSprite.init(EYE_IDLE_CLIPS, EYE_IDLE_FRAMES);
+        flyingEye1.hurtSprite.init(EYE_HURT_CLIPS, EYE_HURT_FRAMES);
+        flyingEye1.health = 5;
+        flyingEye1.attackStatus = 0;
+        flyingEye1.moveStatus = 0;
+        flyingEye1.w = 70;
+        flyingEye1.h = 55;
+        flyingEye1.x = 500;
+        flyingEye1.y = 260;
+        flyingEye1.dx = 2;
+        flyingEye1.dy = 0;
+        flyingEye1.firstPos = flyingEye1.x;
+        flyingEye1.flip = SDL_FLIP_NONE;
     }
 
     void initSkill(){
@@ -412,7 +451,7 @@ struct Game{
         skill->flipStatus = 2;
     }
 
-    void initEnemyBullet_1(){
+    void initEnemyBullet_1(Sound sound){
         if (angel_1.attackStatus == 1 && angel_1.attackReload < 0){
             //cout << "1" << " ";
             Entity* bullet = new Entity();
@@ -428,11 +467,12 @@ struct Game{
             bullet->flip = angel_1.flip;
             bullet->health = 1;
             angel_1.attackReload = 80;
+            sound.playSoundEffect(angelAttack1);
         }
         angel_1.attackReload--;
     }
 
-    void initEnemyBullet_2(){
+    void initEnemyBullet_2(Sound sound){
         if (angel_2.attackStatus == 1 && angel_2.attackReload < 0){
             Entity* bullet = new Entity();
             bullets_2.push_back(bullet);
@@ -447,11 +487,12 @@ struct Game{
             bullet->flip = angel_2.flip;
             bullet->health = 1;
             angel_2.attackReload = 80;
+            sound.playSoundEffect(angelAttack1);
         }
         angel_2.attackReload--;
     }
 
-    void initEnemyBullet_3(){
+    void initEnemyBullet_3(Sound sound){
         if (angel_3.attackStatus == 1 && angel_3.attackReload < 0){
             Entity* bullet = new Entity();
             bullets_3.push_back(bullet);
@@ -466,11 +507,12 @@ struct Game{
             bullet->flip = angel_3.flip;
             bullet->health = 1;
             angel_3.attackReload = 80;
+            sound.playSoundEffect(angelAttack2);
         }
         angel_3.attackReload--;
     }
 
-    void initEnemyBullet_4(){
+    void initEnemyBullet_4(Sound sound){
         if (angel_4.attackStatus == 1 && angel_4.attackReload < 0){
             Entity* bullet = new Entity();
             bullets_4.push_back(bullet);
@@ -485,11 +527,12 @@ struct Game{
             bullet->flip = angel_4.flip;
             bullet->health = 1;
             angel_4.attackReload = 80;
+            sound.playSoundEffect(angelAttack2);
         }
         angel_4.attackReload--;
     }
 
-    void initEnemyBullet_5(){
+    void initEnemyBullet_5(Sound sound){
         if (angel_5.attackStatus == 1 && angel_5.attackReload < 0){
             Entity* bullet = new Entity();
             bullets_5.push_back(bullet);
@@ -504,42 +547,63 @@ struct Game{
             bullet->flip = angel_5.flip;
             bullet->health = 1;
             angel_5.attackReload = 80;
+            sound.playSoundEffect(angelAttack2);
         }
         angel_5.attackReload--;
     }
 
-    void initSword(){
+    void initSword1(Sound sound){
         Entity* sword = new Entity();
-        swords.push_back(sword);
+        swords1.push_back(sword);
         sword->attackSprite.spriteSheetTexture = swordTexture;
         sword->attackSprite.init(SWORD_CLIPS, SWORD_FRAMES);
-        if ( skeleton.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton.x - 40;
-        else sword->x = skeleton.x + 80;
-        sword->y = skeleton.y + (skeleton.h - sword->h)/2 - 20;
+        if ( skeleton1.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton1.x - 40;
+        else sword->x = skeleton1.x + 80;
+        sword->y = skeleton1.y + (skeleton1.h - sword->h)/2 - 20;
         sword->w = 33;
         sword->h = 33;
         sword->dx = 4;
         sword->dy = 0;
         sword->health = 1;
-        sword->flip = skeleton.flip;
+        sword->flip = skeleton1.flip;
         sword->firstPos = sword->x;
+        sound.playSoundEffect(skeletonAttack);
     }
 
-    void initBomb(){
+    void initSword2(Sound sound){
+        Entity* sword = new Entity();
+        swords2.push_back(sword);
+        sword->attackSprite.spriteSheetTexture = swordTexture;
+        sword->attackSprite.init(SWORD_CLIPS, SWORD_FRAMES);
+        if ( skeleton2.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton2.x - 40;
+        else sword->x = skeleton2.x + 80;
+        sword->y = skeleton2.y + (skeleton2.h - sword->h)/2 - 20;
+        sword->w = 33;
+        sword->h = 33;
+        sword->dx = 4;
+        sword->dy = 0;
+        sword->health = 1;
+        sword->flip = skeleton2.flip;
+        sword->firstPos = sword->x;
+        sound.playSoundEffect(skeletonAttack);
+    }
+
+    void initBomb1(Sound sound){
         Entity* bomb = new Entity();
-        bombs.push_back(bomb);
+        bombs1.push_back(bomb);
         bomb->attackSprite.spriteSheetTexture = bombTexture;
         bomb->attackSprite.init(BOMB_CLIPS, BOMB_FRAMES);
-        if ( flyingEye.flip == SDL_FLIP_HORIZONTAL) bomb->x = flyingEye.x - 40;
-        else bomb->x = flyingEye.x + 60;
+        if ( flyingEye1.flip == SDL_FLIP_HORIZONTAL) bomb->x = flyingEye1.x - 40;
+        else bomb->x = flyingEye1.x + 60;
         bomb->y = 380;
         bomb->w = 35;
         bomb->h = 35;
         bomb->dx = 4;
         bomb->dy = 0;
         bomb->health = 1;
-        bomb->flip = flyingEye.flip;
+        bomb->flip = flyingEye1.flip;
         bomb->firstPos = bomb->x;
+        sound.playSoundEffect(flyingEyeAttack);
     }
     void initArrow1(){
         Entity* arrow = new Entity();
@@ -668,7 +732,7 @@ struct Game{
         shooter4.y = 510;
     }
 
-    void doPlayer( int keyInput[], Map gameMap){
+    void doPlayer( int keyInput[], Map gameMap, Sound sound){
         if ( gameStatus == 1){
             if ( player.y >= 617) player.health = 0;
         }
@@ -721,6 +785,7 @@ struct Game{
         }
 
         if (keyInput[SDL_SCANCODE_J] && SDL_GetTicks() - skillReloadTime >= 1000){
+            sound.playSoundEffect(playerAttack);
             initSkill();
             player.attackStatus = 1;
             player.moveStatus = 2;
@@ -737,6 +802,7 @@ struct Game{
             else player.dy = 0;
 
             if (keyInput[SDL_SCANCODE_SPACE] && player.onGround1(gameMap)){
+                sound.playSoundEffect(playerJump);
                 player.dy  -= PLAYER_JUMP_SPEED;
             }
         }
@@ -747,6 +813,7 @@ struct Game{
             else player.dy = 0;
 
             if (keyInput[SDL_SCANCODE_SPACE] && player.onGround2(gameMap)){
+                sound.playSoundEffect(playerJump);
                 player.dy  -= PLAYER_JUMP_SPEED;
             }
         }
@@ -757,6 +824,7 @@ struct Game{
             else player.dy = 0;
 
             if (keyInput[SDL_SCANCODE_SPACE] && player.onGround3(gameMap)){
+                sound.playSoundEffect(playerJump);
                 player.dy  -= PLAYER_JUMP_SPEED;
             }
         }
@@ -855,70 +923,104 @@ struct Game{
     }
 
     void doSkeleton(){
-        if (skeleton.attackStatus == 1 && skeleton.health > 0){
-            if ( player.x > skeleton.x){
-                skeleton.flip = SDL_FLIP_NONE;
-                if ( abs(skeleton.x - player.x) > 160 && 500 < skeleton.x && skeleton.x < 1000 ){
-                    skeleton.move();
+        if (skeleton1.attackStatus == 1 && skeleton1.health > 0){
+            if ( player.x > skeleton1.x){
+                skeleton1.flip = SDL_FLIP_NONE;
+                if ( abs(skeleton1.x - player.x) > 160 && 500 < skeleton1.x && skeleton1.x < 1000 ){
+                    skeleton1.move();
                 }
-                else skeleton.attackStatus = 1;
+                else skeleton1.attackStatus = 1;
             }
-            else if ( player.x < skeleton.x){
-                skeleton.flip = SDL_FLIP_HORIZONTAL;
-                if ( abs(skeleton.x - player.x) > 160 && 500 < skeleton.x && skeleton.x < 1000){
-                    skeleton.moveBack();
+            else if ( player.x < skeleton1.x){
+                skeleton1.flip = SDL_FLIP_HORIZONTAL;
+                if ( abs(skeleton1.x - player.x) > 160 && 500 < skeleton1.x && skeleton1.x < 1000){
+                    skeleton1.moveBack();
                 }
-                else skeleton.attackStatus = 1;
+                else skeleton1.attackStatus = 1;
             }
-            skeleton.w = skeleton.attackSprite.clips[skeleton.attackSprite.frame/10].w;
-            skeleton.h = skeleton.attackSprite.clips[skeleton.attackSprite.frame/10].h;
-            skeleton.y = 448 - skeleton.h;
+            skeleton1.w = skeleton1.attackSprite.clips[skeleton1.attackSprite.frame/10].w;
+            skeleton1.h = skeleton1.attackSprite.clips[skeleton1.attackSprite.frame/10].h;
+            skeleton1.y = 448 - skeleton1.h;
         }
-        else if ( skeleton.attackStatus == 2 && skeleton.health > 0){
-            skeleton.w = skeleton.hurtSprite.clips[skeleton.hurtSprite.frame/6].w;
-            skeleton.h = skeleton.hurtSprite.clips[skeleton.hurtSprite.frame/6].h;
-            skeleton.y = 448 - skeleton.h;
+        else if ( skeleton1.attackStatus == 2 && skeleton1.health > 0){
+            skeleton1.w = skeleton1.hurtSprite.clips[skeleton1.hurtSprite.frame/6].w;
+            skeleton1.h = skeleton1.hurtSprite.clips[skeleton1.hurtSprite.frame/6].h;
+            skeleton1.y = 448 - skeleton1.h;
         }
         else{
-            if ( player.x > skeleton.x ) skeleton.flip = SDL_FLIP_NONE;
-            else skeleton.flip = SDL_FLIP_HORIZONTAL;
-            skeleton.w = skeleton.idleSprite.clips[skeleton.idleSprite.frame/10].w;
-            skeleton.w = skeleton.idleSprite.clips[skeleton.idleSprite.frame/10].h;
-            skeleton.y = 448 - skeleton.h;
+            if ( player.x > skeleton1.x ) skeleton1.flip = SDL_FLIP_NONE;
+            else skeleton1.flip = SDL_FLIP_HORIZONTAL;
+            skeleton1.w = skeleton1.idleSprite.clips[skeleton1.idleSprite.frame/10].w;
+            skeleton1.w = skeleton1.idleSprite.clips[skeleton1.idleSprite.frame/10].h;
+            skeleton1.y = 448 - skeleton1.h;
+        }
+    }
+
+    void doSkeleton2(){
+        if (skeleton2.attackStatus == 1 && skeleton2.health > 0){
+            if ( player.x > skeleton2.x){
+                skeleton2.flip = SDL_FLIP_NONE;
+                if ( abs(skeleton2.x - player.x) > 160 && 256 < skeleton2.x && skeleton2.x < 576 ){
+                    skeleton2.move();
+                }
+                else skeleton2.attackStatus = 1;
+            }
+            else if ( player.x < skeleton2.x){
+                skeleton2.flip = SDL_FLIP_HORIZONTAL;
+                if ( abs(skeleton2.x - player.x) > 160 && 256 < skeleton2.x && skeleton2.x < 576){
+                    skeleton2.moveBack();
+                }
+                else skeleton2.attackStatus = 1;
+            }
+            skeleton2.w = skeleton2.attackSprite.clips[skeleton2.attackSprite.frame/10].w;
+            skeleton2.h = skeleton2.attackSprite.clips[skeleton2.attackSprite.frame/10].h;
+            skeleton2.y = 192 - skeleton2.h;
+        }
+        else if ( skeleton2.attackStatus == 2 && skeleton2.health > 0){
+            skeleton2.w = skeleton2.hurtSprite.clips[skeleton2.hurtSprite.frame/6].w;
+            skeleton2.h = skeleton2.hurtSprite.clips[skeleton2.hurtSprite.frame/6].h;
+            skeleton2.y = 192 - skeleton2.h;
+        }
+        else{
+            if ( player.x > skeleton2.x ) skeleton2.flip = SDL_FLIP_NONE;
+            else skeleton2.flip = SDL_FLIP_HORIZONTAL;
+            skeleton2.w = skeleton2.idleSprite.clips[skeleton2.idleSprite.frame/10].w;
+            skeleton2.w = skeleton2.idleSprite.clips[skeleton2.idleSprite.frame/10].h;
+            skeleton2.y = 192 - skeleton2.h;
         }
     }
 
     void doFlyingEye(){
-        if (flyingEye.attackStatus == 1 && flyingEye.health > 0){
-            if ( player.x > flyingEye.x){
-                flyingEye.flip = SDL_FLIP_NONE;
-                if ( abs(flyingEye.x - player.x) > 160 && 448 < flyingEye.x && flyingEye.x < 1000 ){
-                    flyingEye.move();
+        if (flyingEye1.attackStatus == 1 && flyingEye1.health > 0){
+            if ( player.x > flyingEye1.x){
+                flyingEye1.flip = SDL_FLIP_NONE;
+                if ( abs(flyingEye1.x - player.x) > 160 && 448 < flyingEye1.x && flyingEye1.x < 1000 ){
+                    flyingEye1.move();
                 }
-                else flyingEye.attackStatus = 1;
+                else flyingEye1.attackStatus = 1;
             }
-            else if ( player.x < flyingEye.x){
-                flyingEye.flip = SDL_FLIP_HORIZONTAL;
-                if ( abs(flyingEye.x - player.x) > 160 && 448 < flyingEye.x && flyingEye.x < 1000){
-                    flyingEye.moveBack();
+            else if ( player.x < flyingEye1.x){
+                flyingEye1.flip = SDL_FLIP_HORIZONTAL;
+                if ( abs(flyingEye1.x - player.x) > 160 && 448 < flyingEye1.x && flyingEye1.x < 1000){
+                    flyingEye1.moveBack();
                 }
-                else flyingEye.attackStatus = 1;
+                else flyingEye1.attackStatus = 1;
             }
-            flyingEye.w = flyingEye.attackSprite.clips[flyingEye.attackSprite.frame/10].w;
-            flyingEye.h = flyingEye.attackSprite.clips[flyingEye.attackSprite.frame/10].h;
-            flyingEye.y = 408 - flyingEye.h;
+            flyingEye1.w = flyingEye1.attackSprite.clips[flyingEye1.attackSprite.frame/10].w;
+            flyingEye1.h = flyingEye1.attackSprite.clips[flyingEye1.attackSprite.frame/10].h;
+            flyingEye1.y = 408 - flyingEye1.h;
         }
-        else if ( flyingEye.attackStatus == 2 && flyingEye.health > 0){
-            flyingEye.w = flyingEye.hurtSprite.clips[flyingEye.hurtSprite.frame/6].w;
-            flyingEye.h = flyingEye.hurtSprite.clips[flyingEye.hurtSprite.frame/6].h;
-            flyingEye.y = 408 - flyingEye.h;
+        else if ( flyingEye1.attackStatus == 2 && flyingEye1.health > 0){
+            flyingEye1.w = flyingEye1.hurtSprite.clips[flyingEye1.hurtSprite.frame/6].w;
+            flyingEye1.h = flyingEye1.hurtSprite.clips[flyingEye1.hurtSprite.frame/6].h;
+            flyingEye1.y = 408 - flyingEye1.h;
         }
         else{
-            if ( player.x > flyingEye.x ) flyingEye.flip = SDL_FLIP_NONE;
-            else flyingEye.flip = SDL_FLIP_HORIZONTAL;
-            flyingEye.w = flyingEye.idleSprite.clips[flyingEye.idleSprite.frame/10].w;
-            flyingEye.w = flyingEye.idleSprite.clips[flyingEye.idleSprite.frame/10].h;
-            flyingEye.y = 408 - flyingEye.h;
+            if ( player.x > flyingEye1.x ) flyingEye1.flip = SDL_FLIP_NONE;
+            else flyingEye1.flip = SDL_FLIP_HORIZONTAL;
+            flyingEye1.w = flyingEye1.idleSprite.clips[flyingEye1.idleSprite.frame/10].w;
+            flyingEye1.w = flyingEye1.idleSprite.clips[flyingEye1.idleSprite.frame/10].h;
+            flyingEye1.y = 408 - flyingEye1.h;
         }
     }
 
@@ -985,17 +1087,23 @@ struct Game{
                     delete currSkill;
                     skills.erase(tmp);
                 }
-                if (skeleton.health > 0 && currSkill->collide(&skeleton)){
+                if (skeleton1.health > 0 && currSkill->collide(&skeleton1)){
                     delete currSkill;
                     skills.erase(tmp);
-                    skeleton.health--;
-                    skeleton.attackStatus = 2;
+                    skeleton1.health--;
+                    skeleton1.attackStatus = 2;
                 }
-                if (flyingEye.health > 0 && currSkill->collide(&flyingEye)){
+                if (skeleton2.health > 0 && currSkill->collide(&skeleton2)){
                     delete currSkill;
                     skills.erase(tmp);
-                    flyingEye.health--;
-                    flyingEye.attackStatus = 2;
+                    skeleton2.health--;
+                    skeleton2.attackStatus = 2;
+                }
+                if (flyingEye1.health > 0 && currSkill->collide(&flyingEye1)){
+                    delete currSkill;
+                    skills.erase(tmp);
+                    flyingEye1.health--;
+                    flyingEye1.attackStatus = 2;
                 }
             }
 
@@ -1137,42 +1245,63 @@ struct Game{
     }
 
     void doSword(){
-        auto it = swords.begin();
-        while ( it != swords.end()){
+        auto it = swords1.begin();
+        while ( it != swords1.end()){
             auto tmp = it;
             Entity* currSword = *tmp;
             if ( currSword->flip == SDL_FLIP_HORIZONTAL) currSword->moveBack();
             else currSword->move();
             if ( currSword->outScreen() || abs(currSword->x - currSword->firstPos) > 200 ){
                 delete currSword;
-                swords.erase(tmp);
+                swords1.erase(tmp);
             }
             if ( player.health > 0 && currSword->collide(&player)){
                 player.health--;
                 player.attackStatus = 2;
                 delete currSword;
-                swords.erase(tmp);
+                swords1.erase(tmp);
+            }
+            it++;
+        }
+    }
+
+    void doSword2(){
+        auto it = swords2.begin();
+        while ( it != swords2.end()){
+            auto tmp = it;
+            Entity* currSword = *tmp;
+            if ( currSword->flip == SDL_FLIP_HORIZONTAL) currSword->moveBack();
+            else currSword->move();
+            if ( currSword->outScreen() || abs(currSword->x - currSword->firstPos) > 200 ){
+                delete currSword;
+                swords2.erase(tmp);
+            }
+            if ( player.health > 0 && currSword->collide(&player)){
+                player.health--;
+                player.attackStatus = 2;
+                delete currSword;
+                swords2.erase(tmp);
             }
             it++;
         }
     }
 
     void doBomb(){
-        auto it = bombs.begin();
-        while ( it != bombs.end()){
+        auto it = bombs1.begin();
+        while ( it != bombs1.end()){
             auto tmp = it;
             Entity* currBomb = *tmp;
             if ( currBomb->flip == SDL_FLIP_HORIZONTAL) currBomb->moveBack();
             else currBomb->move();
             if ( currBomb->outScreen() || abs(currBomb->x - currBomb->firstPos) > 200 ){
                 delete currBomb;
-                bombs.erase(tmp);
+                bombs1.erase(tmp);
             }
             if ( player.health > 0 && currBomb->collide(&player)){
                 player.health--;
                 player.attackStatus = 2;
                 delete currBomb;
-                bombs.erase(tmp);
+                bombs1.erase(tmp);
             }
             it++;
         }
@@ -1362,8 +1491,13 @@ struct Game{
             else player.x -= 20;
         }
     }
-    void doStage1(int keyInput[], Map gameMap){
-        doPlayer(keyInput, gameMap);
+    void doStage1(int keyInput[], Map gameMap, Sound sound){
+        if ( soundStatus == 0){
+            sound.stopMusic();
+            soundStatus = 1;
+        }
+        if (!sound.musicPlaying()) sound.playMusic(stage1);
+        doPlayer(keyInput, gameMap, sound);
         doSkill();
         doFirstAngel();
         doSecondAngel();
@@ -1371,30 +1505,35 @@ struct Game{
         doFourthAngel();
         doFifthAngel();
         if ( angel_1.health > 0){
-            initEnemyBullet_1();
+            initEnemyBullet_1(sound);
             doEnemyBullet_1();
         }
         if ( angel_2.health > 0){
-            initEnemyBullet_2();
+            initEnemyBullet_2(sound);
             doEnemyBullet_2();
         }
         if ( angel_3.health > 0){
-            initEnemyBullet_3();
+            initEnemyBullet_3(sound);
             doEnemyBullet_3();
         }
         if ( angel_4.health > 0){
-            initEnemyBullet_4();
+            initEnemyBullet_4(sound);
             doEnemyBullet_4();
         }
         if ( angel_5.health > 0){
-            initEnemyBullet_5();
+            initEnemyBullet_5(sound);
             doEnemyBullet_5();
         }
         if ( player.health == 0) gameStatus = 6;
     }
 
-    void doStage2(int keyInput[], Map gameMap){
-        doPlayer(keyInput, gameMap);
+    void doStage2(int keyInput[], Map gameMap, Sound sound){
+        if ( soundStatus == 1){
+            sound.stopMusic();
+            soundStatus = 0;
+        }
+        if (!sound.musicPlaying()) sound.playMusic(stage2);
+        doPlayer(keyInput, gameMap, sound);
         doSkill();
         doSpikeTrap1();
         doSpikeTrap2();
@@ -1429,14 +1568,20 @@ struct Game{
             arrowSpawnTime4 = SDL_GetTicks();
         }
         doArrow4();
-        if ( SDL_GetTicks() - swordSpawnTime >= 1200 && skeleton.attackStatus == 1){
-            initSword();
+        if ( SDL_GetTicks() - swordSpawnTime >= 1200 && skeleton1.attackStatus == 1){
+            initSword1(sound);
             swordSpawnTime = SDL_GetTicks();
         }
+        if ( SDL_GetTicks() - swordSpawnTime2>= 1200 && skeleton2.attackStatus == 1){
+            initSword2(sound);
+            swordSpawnTime2 = SDL_GetTicks();
+        }
         doSword();
+        doSword2();
         doSkeleton();
-        if ( SDL_GetTicks() - bombSpawnTime >= 1200 && flyingEye.attackStatus == 1){
-            initBomb();
+        doSkeleton2();
+        if ( SDL_GetTicks() - bombSpawnTime >= 1200 && flyingEye1.attackStatus == 1){
+            initBomb1(sound);
             bombSpawnTime = SDL_GetTicks();
         }
         doBomb();
@@ -1444,11 +1589,11 @@ struct Game{
         if ( player.health == 0) gameStatus = 6;
     }
 
-    void doStage3(int keyInput[], Map gameMap){
+    void doStage3(int keyInput[], Map gameMap, Sound sound){
         if ( SDL_GetTicks() - time >= 38000){
             boss.dx = 4;
         }
-        doPlayer(keyInput, gameMap);
+        doPlayer(keyInput, gameMap, sound);
         doSkill();
         doBoss();
         if ( player.health == 0) gameStatus = 6;
@@ -1637,38 +1782,57 @@ struct Game{
             spearTrap2.idleSprite.doSprite(graphic, SPEAR_FRAMES, spearTrap2.x, spearTrap2.y, SDL_FLIP_VERTICAL);
         }
 
-        if ( skeleton.health > 0){
-            if ( skeleton.attackStatus == 2) skeleton.hurtSprite.doSlowSprite_2(graphic, SKELETON_HURT_FRAMES, skeleton.x, skeleton.y, skeleton.flip);
-            else if (skeleton.attackStatus == 1) skeleton.attackSprite.doSlowSprite2(graphic, SKELETON_ATTACK_FRAMES, skeleton.x, skeleton.y, skeleton.flip);
-            else if (skeleton.moveStatus == 1) skeleton.runSprite.doSlowSprite2(graphic, SKELETON_WALK_FRAMES, skeleton.x, skeleton.y, skeleton.flip);
-            else skeleton.idleSprite.doSlowSprite2(graphic, SKELETON_IDLE_FRAMES, skeleton.x, skeleton.y, skeleton.flip);
-            if ( skeleton.hurtSprite.frame/6 >= SKELETON_HURT_FRAMES){
-                skeleton.hurtSprite.frame = 0;
-                skeleton.attackStatus = 1;
+        if ( skeleton1.health > 0){
+            if ( skeleton1.attackStatus == 2) skeleton1.hurtSprite.doSlowSprite_2(graphic, SKELETON_HURT_FRAMES, skeleton1.x, skeleton1.y, skeleton1.flip);
+            else if (skeleton1.attackStatus == 1) skeleton1.attackSprite.doSlowSprite2(graphic, SKELETON_ATTACK_FRAMES, skeleton1.x, skeleton1.y, skeleton1.flip);
+            else if (skeleton1.moveStatus == 1) skeleton1.runSprite.doSlowSprite2(graphic, SKELETON_WALK_FRAMES, skeleton1.x, skeleton1.y, skeleton1.flip);
+            else skeleton1.idleSprite.doSlowSprite2(graphic, SKELETON_IDLE_FRAMES, skeleton1.x, skeleton1.y, skeleton1.flip);
+            if ( skeleton1.hurtSprite.frame/6 >= SKELETON_HURT_FRAMES){
+                skeleton1.hurtSprite.frame = 0;
+                skeleton1.attackStatus = 1;
             }
         }
         else{
-            chest_6.idleSprite.doSlowSprite(graphic, CHEST_FRAMES, skeleton.x, 404);
-            if ( key_6.health == 1 ) key_6.idleSprite.doSprite(graphic, KEY_FRAMES, skeleton.x+20, skeleton.y-10);
-            if ( key_6.health == 1 && (( player.x + player.w >=  skeleton.x + 20 && player.x + player.w <= skeleton.x + 35 && player.flipStatus == 0) || ( player.x >=  skeleton.x + 20 && player.x <= skeleton.x + 35 && player.flipStatus == 1))){
+            chest_6.idleSprite.doSlowSprite(graphic, CHEST_FRAMES, skeleton1.x, 404);
+            if ( key_6.health == 1 ) key_6.idleSprite.doSprite(graphic, KEY_FRAMES, skeleton1.x+20, skeleton1.y-10);
+            if ( key_6.health == 1 && (( player.x + player.w >=  skeleton1.x + 20 && player.x + player.w <= skeleton1.x + 35 && player.flipStatus == 0) || ( player.x >=  skeleton1.x + 20 && player.x <= skeleton1.x + 35 && player.flipStatus == 1))){
                 keyCount2++;
                 key_6.health = 0;
             }
         }
 
-        if ( flyingEye.health > 0){
-            if ( flyingEye.attackStatus == 2) flyingEye.hurtSprite.doSlowSprite_2(graphic, EYE_HURT_FRAMES, flyingEye.x, flyingEye.y, flyingEye.flip);
-            else if (flyingEye.attackStatus == 1) flyingEye.attackSprite.doSlowSprite2(graphic, EYE_ATTACK_FRAMES, flyingEye.x, flyingEye.y, flyingEye.flip);
-            else flyingEye.idleSprite.doSlowSprite2(graphic, EYE_IDLE_FRAMES, flyingEye.x, flyingEye.y, flyingEye.flip);
-            if ( flyingEye.hurtSprite.frame/6 >= EYE_HURT_FRAMES){
-                flyingEye.hurtSprite.frame = 0;
-                flyingEye.attackStatus = 1;
+        if ( skeleton2.health > 0){
+            if ( skeleton2.attackStatus == 2) skeleton2.hurtSprite.doSlowSprite_2(graphic, SKELETON_HURT_FRAMES, skeleton2.x, skeleton2.y, skeleton2.flip);
+            else if (skeleton2.attackStatus == 1) skeleton2.attackSprite.doSlowSprite2(graphic, SKELETON_ATTACK_FRAMES, skeleton2.x, skeleton2.y, skeleton2.flip);
+            else if (skeleton2.moveStatus == 1) skeleton2.runSprite.doSlowSprite2(graphic, SKELETON_WALK_FRAMES, skeleton2.x, skeleton2.y, skeleton2.flip);
+            else skeleton2.idleSprite.doSlowSprite2(graphic, SKELETON_IDLE_FRAMES, skeleton2.x, skeleton2.y, skeleton2.flip);
+            if ( skeleton2.hurtSprite.frame/6 >= SKELETON_HURT_FRAMES){
+                skeleton2.hurtSprite.frame = 0;
+                skeleton2.attackStatus = 1;
+            }
+        }
+//       else{
+//            chest_6.idleSprite.doSlowSprite(graphic, CHEST_FRAMES, skeleton2.x, 404);
+//            if ( key_6.health == 1 ) key_6.idleSprite.doSprite(graphic, KEY_FRAMES, skeleton2.x+20, skeleton2.y-10);
+//            if ( key_6.health == 1 && (( player.x + player.w >=  skeleton2.x + 20 && player.x + player.w <= skeleton2.x + 35 && player.flipStatus == 0) || ( player.x >=  skeleton2.x + 20 && player.x <= skeleton2.x + 35 && player.flipStatus == 1))){
+//                keyCount2++;
+//                key_6.health = 0;
+//            }
+//        }
+
+        if ( flyingEye1.health > 0){
+            if ( flyingEye1.attackStatus == 2) flyingEye1.hurtSprite.doSlowSprite_2(graphic, EYE_HURT_FRAMES, flyingEye1.x, flyingEye1.y, flyingEye1.flip);
+            else if (flyingEye1.attackStatus == 1) flyingEye1.attackSprite.doSlowSprite2(graphic, EYE_ATTACK_FRAMES, flyingEye1.x, flyingEye1.y, flyingEye1.flip);
+            else flyingEye1.idleSprite.doSlowSprite2(graphic, EYE_IDLE_FRAMES, flyingEye1.x, flyingEye1.y, flyingEye1.flip);
+            if ( flyingEye1.hurtSprite.frame/6 >= EYE_HURT_FRAMES){
+                flyingEye1.hurtSprite.frame = 0;
+                flyingEye1.attackStatus = 1;
             }
         }
         else{
-            chest_7.idleSprite.doSlowSprite(graphic, CHEST_FRAMES, flyingEye.x, 404);
-            if ( key_7.health == 1 ) key_7.idleSprite.doSprite(graphic, KEY_FRAMES, flyingEye.x+20, skeleton.y-10);
-            if ( key_7.health == 1 && (( player.x + player.w >=  flyingEye.x + 20 && player.x + player.w <= flyingEye.x + 35 && player.flipStatus == 0) || ( player.x >=  flyingEye.x + 20 && player.x <= flyingEye.x + 35 && player.flipStatus == 1))){
+            chest_7.idleSprite.doSlowSprite(graphic, CHEST_FRAMES, flyingEye1.x, 404);
+            if ( key_7.health == 1 ) key_7.idleSprite.doSprite(graphic, KEY_FRAMES, flyingEye1.x+20, skeleton1.y-10);
+            if ( key_7.health == 1 && (( player.x + player.w >=  flyingEye1.x + 20 && player.x + player.w <= flyingEye1.x + 35 && player.flipStatus == 0) || ( player.x >=  flyingEye1.x + 20 && player.x <= flyingEye1.x + 35 && player.flipStatus == 1))){
                 keyCount2++;
                 key_7.health = 0;
             }
@@ -1722,11 +1886,15 @@ struct Game{
             graphic.renderTexture(arrow->texture, nullptr, arrow->x, arrow->y);
         }
 
-        for (Entity* sword : swords){
+        for (Entity* sword : swords1){
             sword->attackSprite.doSprite(graphic, SWORD_FRAMES, sword->x, sword->y, sword->flip);
         }
 
-        for (Entity* bomb : bombs){
+        for (Entity* sword : swords2){
+            sword->attackSprite.doSprite(graphic, SWORD_FRAMES, sword->x, sword->y, sword->flip);
+        }
+
+        for (Entity* bomb : bombs1){
             bomb->attackSprite.doSprite(graphic, BOMB_FRAMES, bomb->x, bomb->y, bomb->flip);
         }
 

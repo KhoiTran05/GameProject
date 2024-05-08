@@ -9,14 +9,17 @@
 #include"game.h"
 #include"entity.h"
 #include"menu.h"
+#include"sound.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]){
     Graphics graphic;
     graphic.initSDL();
+    Sound sound;
+    sound.initSound();
     Menu menu;
-    menu.init(graphic);
+    menu.init(graphic, sound);
     Map first_stage;
     first_stage.initMap1(graphic);
     first_stage.readMap1("map1.dat");
@@ -28,27 +31,27 @@ int main(int argc, char *argv[]){
     Input input;
     input.init();
     Game game;
-    game.init(graphic);
+    game.init(graphic, sound);
     while(1){
         graphic.prepareScene();
         if ( game.gameStatus == 0){
             menu.drawMenu1(graphic);
-            menu.doMenu1(game);
+            menu.doMenu1(game, sound);
         }
         if (game.gameStatus == 6){
-            menu.doMenu2(game);
+            menu.doMenu2(game, sound);
             menu.drawMenu2(graphic);
             game.init2();
             input.init();
         }
         if ( game.gameStatus == 7){
-            menu.doMenu3(game);
+            menu.doMenu3(game, sound);
             menu.drawMenu3(graphic);
         }
         input.getInput();
         if ( game.gameStatus == 1){
             first_stage.drawMap1(graphic);
-            game.doStage1(input.keyboard, first_stage);
+            game.doStage1(input.keyboard, first_stage, sound);
             game.drawGame(graphic);
         }
         if ( game.gameStatus == 2){
@@ -57,7 +60,7 @@ int main(int argc, char *argv[]){
         }
         if ( game.gameStatus == 3){
             second_stage.drawMap2(graphic);
-            game.doStage2(input.keyboard, second_stage);
+            game.doStage2(input.keyboard, second_stage, sound);
             game.drawGame2(graphic);
         }
         if (game.gameStatus == 4){
@@ -67,7 +70,7 @@ int main(int argc, char *argv[]){
         }
         if (game.gameStatus == 5){
             third_stage.drawMap3(graphic);
-            game.doStage3(input.keyboard, third_stage);
+            game.doStage3(input.keyboard, third_stage, sound);
             game.drawGame3(graphic);
         }
         graphic.presentScene();

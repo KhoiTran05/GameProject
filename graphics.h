@@ -4,7 +4,6 @@
 #include<SDL.h>
 #include<SDL_image.h>
 #include<SDL_ttf.h>
-#include<SDL_mixer.h>
 #include"defs.h"
 
 using namespace std;
@@ -27,10 +26,6 @@ struct Graphics{
         if ( !(IMG_Init(imgFlags) & imgFlags)){
             std::cout << "Failed to init SDL image" << std::endl;
             IMG_GetError();
-        }
-        if ( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
-            std::cout << "Failed to init SDL Mixer" << std::endl;
-            Mix_GetError();
         }
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if ( renderer == nullptr){

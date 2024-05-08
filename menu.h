@@ -8,6 +8,7 @@
 #include"graphics.h"
 #include"defs.h"
 #include"game.h"
+#include"sound.h"
 
 using namespace std;
 
@@ -17,8 +18,9 @@ struct Menu{
     SDL_Texture* aButton, *dButton, *wButton, *jButton, *kButton, *spaceButton, *moveTextTexture, *climbTextTexture, *attackTextTexture, *dashTextTexture, *jumpTextTexture, *clickTextTexture;
     SDL_Color titleTextColor, startTextColor, helpTextColor, exitTextColor, menuTextColor, instructTextColor;
     TTF_Font* titleTextFont, *textFont, *instructFont, *buttonFont;
+    Mix_Music* bgMusic;
 
-    void init(Graphics& graphic){
+    void init(Graphics& graphic, Sound& sound){
         startBackground = graphic.loadTexture("Image//StartBg.png");
         deadBackground = graphic.loadTexture("Image//DeadBG.png");
         borderTexture = graphic.loadTexture("Image//Border.png");
@@ -48,9 +50,10 @@ struct Menu{
         attackTextTexture = graphic.loadTextTexture("Attack", instructTextColor, buttonFont);
         dashTextTexture = graphic.loadTextTexture("Dash (Only in final stage)", instructTextColor, buttonFont);
         clickTextTexture = graphic.loadTextTexture("Click anywhere to back to menu", instructTextColor, instructFont);
+        bgMusic = sound.loadMusic("Sound//Background.mp3");
     }
 
-    void doMenu1(Game& game){
+    void doMenu1(Game& game, Sound& sound){
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
 //        cout << mouse_x << " " << mouse_y << endl;
@@ -84,6 +87,9 @@ struct Menu{
                 }
                 break;
             }
+            if (!sound.musicPlaying()){
+                sound.playMusic(bgMusic);
+            }
         }
     }
 
@@ -101,7 +107,7 @@ struct Menu{
         graphic.renderTexture(borderTexture, nullptr, SCREEN_WIDTH/2-150, SCREEN_HEIGHT/2+212);
     }
 
-    void doMenu2(Game& game){
+    void doMenu2(Game& game, Sound& sound){
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
 //        cout << mouse_x << " " << mouse_y << endl;
@@ -122,6 +128,9 @@ struct Menu{
                 break;
             }
         }
+        if (!sound.musicPlaying()){
+            sound.playMusic(bgMusic);
+        }
 
     }
 
@@ -133,7 +142,7 @@ struct Menu{
         graphic.renderTexture(menuTextTexture, nullptr, 570, 416);
     }
 
-    void doMenu3(Game& game){
+    void doMenu3(Game& game, Sound& sound){
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
 //        cout << mouse_x << " " << mouse_y << endl;
@@ -147,7 +156,9 @@ struct Menu{
                 break;
             }
         }
-
+        if (!sound.musicPlaying()){
+            sound.playMusic(bgMusic);
+        }
     }
 
     void drawMenu3(Graphics& graphic){

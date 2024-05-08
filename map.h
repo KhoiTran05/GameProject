@@ -266,14 +266,14 @@ struct Map{
                 }
             }
         }
-        graphic.renderTexture(net1, nullptr, 384, 190);
+        graphic.renderTexture(net1, nullptr, 384, 254);
         graphic.renderTexture(net2, nullptr, 0, 510);
         graphic.renderTexture(chain1, nullptr, 600, 510);
         graphic.renderTexture(skull, nullptr, 700, 430);
         graphic.renderTexture(cage, nullptr, 820, 190);
         graphic.renderTexture(chain2, nullptr, 300, 0);
         graphic.renderTexture(chain2, nullptr, 900, 0);
-        graphic.renderTexture(pot1, nullptr, 300, 88);
+        graphic.renderTexture(pot1, nullptr, 300, 152);
         graphic.renderTexture(pot1, nullptr, 800, 88);
         graphic.renderTexture(pot2, nullptr, 840, 88);
         graphic.renderTexture(pot1, nullptr, 400, 600);

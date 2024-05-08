@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1714750731 source:c:\users\admin\onedrive\documents\ltnc\gameproject\main.cpp
+1715153541 source:c:\users\admin\onedrive\documents\ltnc\gameproject\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -11,17 +11,17 @@
 	"game.h"
 	"entity.h"
 	"menu.h"
+	"sound.h"
 
-1714037151 c:\users\admin\onedrive\documents\ltnc\gameproject\graphics.h
+1715150458 c:\users\admin\onedrive\documents\ltnc\gameproject\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
-	<SDL_mixer.h>
 	"defs.h"
 
 1714292712 c:\users\admin\onedrive\documents\ltnc\gameproject\defs.h
 
-1714052854 c:\users\admin\onedrive\documents\ltnc\gameproject\map.h
+1715159399 c:\users\admin\onedrive\documents\ltnc\gameproject\map.h
 	<SDL.h>
 	<SDL_image.h>
 	"graphics.h"
@@ -32,14 +32,16 @@
 	<SDL.h>
 	"defs.h"
 
-1714790100 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
+1715159441 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
+	<SDL_mixer.h>
 	"defs.h"
 	"entity.h"
 	"graphics.h"
+	"sound.h"
 
 1714132367 c:\users\admin\onedrive\documents\ltnc\gameproject\entity.h
 	"sprite.h"
@@ -52,7 +54,7 @@
 	"graphics.h"
 	"defs.h"
 
-1714388833 c:\users\admin\onedrive\documents\ltnc\gameproject\menu.h
+1715151542 c:\users\admin\onedrive\documents\ltnc\gameproject\menu.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -60,4 +62,9 @@
 	"graphics.h"
 	"defs.h"
 	"game.h"
+	"sound.h"
+
+1715150840 c:\users\admin\onedrive\documents\ltnc\gameproject\sound.h
+	<SDL_mixer.h>
+	<bits/stdc++.h>
 
