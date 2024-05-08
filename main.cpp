@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
         if (game.gameStatus == 5){
             third_stage.drawMap3(graphic);
             game.doStage3(input.keyboard, third_stage, sound);
-            game.drawGame3(graphic);
+            game.drawGame3(graphic, sound);
         }
         graphic.presentScene();
     }

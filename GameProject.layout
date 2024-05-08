@@ -2,109 +2,93 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="sprite.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1541" topLine="18" />
-		</Cursor>
-	</File>
-	<File name="entity.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3113" topLine="52" />
-		</Cursor>
-	</File>
 	<File name="game.h" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="264" topLine="0" />
+			<Cursor1 position="91352" topLine="459" />
 		</Cursor>
 		<Folding>
-			<Collapse line="187" />
-			<Collapse line="221" />
-			<Collapse line="227" />
-			<Collapse line="258" />
-			<Collapse line="277" />
-			<Collapse line="296" />
+			<Collapse line="239" />
+			<Collapse line="245" />
+			<Collapse line="276" />
 			<Collapse line="314" />
 			<Collapse line="332" />
 			<Collapse line="350" />
 			<Collapse line="368" />
 			<Collapse line="386" />
+			<Collapse line="404" />
 			<Collapse line="422" />
-			<Collapse line="439" />
-			<Collapse line="453" />
+			<Collapse line="440" />
+			<Collapse line="457" />
 			<Collapse line="474" />
-			<Collapse line="494" />
-			<Collapse line="514" />
-			<Collapse line="534" />
-			<Collapse line="590" />
+			<Collapse line="488" />
+			<Collapse line="509" />
+			<Collapse line="529" />
+			<Collapse line="549" />
+			<Collapse line="569" />
+			<Collapse line="589" />
 			<Collapse line="607" />
-			<Collapse line="620" />
-			<Collapse line="633" />
-			<Collapse line="646" />
-			<Collapse line="658" />
-			<Collapse line="665" />
-			<Collapse line="672" />
-			<Collapse line="679" />
-			<Collapse line="686" />
-			<Collapse line="693" />
+			<Collapse line="625" />
+			<Collapse line="643" />
+			<Collapse line="661" />
+			<Collapse line="674" />
+			<Collapse line="687" />
 			<Collapse line="700" />
-			<Collapse line="707" />
-			<Collapse line="713" />
-			<Collapse line="720" />
-			<Collapse line="727" />
-			<Collapse line="734" />
-			<Collapse line="839" />
-			<Collapse line="856" />
-			<Collapse line="873" />
-			<Collapse line="890" />
-			<Collapse line="907" />
-			<Collapse line="992" />
-			<Collapse line="1141" />
-			<Collapse line="1162" />
-			<Collapse line="1183" />
-			<Collapse line="1204" />
-			<Collapse line="1225" />
-			<Collapse line="1310" />
-			<Collapse line="1364" />
-			<Collapse line="1384" />
-			<Collapse line="1404" />
-			<Collapse line="1424" />
-			<Collapse line="1443" />
-			<Collapse line="1450" />
-			<Collapse line="1457" />
-			<Collapse line="1464" />
-			<Collapse line="1471" />
-			<Collapse line="1478" />
-			<Collapse line="1486" />
-			<Collapse line="1493" />
+			<Collapse line="712" />
+			<Collapse line="719" />
+			<Collapse line="726" />
+			<Collapse line="733" />
+			<Collapse line="740" />
+			<Collapse line="747" />
+			<Collapse line="754" />
+			<Collapse line="761" />
+			<Collapse line="767" />
+			<Collapse line="774" />
+			<Collapse line="781" />
+			<Collapse line="788" />
+			<Collapse line="893" />
+			<Collapse line="910" />
+			<Collapse line="927" />
+			<Collapse line="944" />
+			<Collapse line="961" />
+			<Collapse line="978" />
+			<Collapse line="1012" />
+			<Collapse line="1046" />
+			<Collapse line="1080" />
+			<Collapse line="1114" />
+			<Collapse line="1235" />
+			<Collapse line="1256" />
+			<Collapse line="1277" />
+			<Collapse line="1298" />
+			<Collapse line="1319" />
+			<Collapse line="1340" />
+			<Collapse line="1361" />
+			<Collapse line="1382" />
+			<Collapse line="1403" />
+			<Collapse line="1425" />
+			<Collapse line="1479" />
+			<Collapse line="1499" />
+			<Collapse line="1519" />
+			<Collapse line="1539" />
+			<Collapse line="1558" />
+			<Collapse line="1565" />
+			<Collapse line="1572" />
+			<Collapse line="1579" />
+			<Collapse line="1586" />
+			<Collapse line="1593" />
 			<Collapse line="1601" />
+			<Collapse line="1608" />
+			<Collapse line="1644" />
+			<Collapse line="1727" />
+			<Collapse line="1893" />
 		</Folding>
 	</File>
-	<File name="input.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="map.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="713" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2054" topLine="42" />
-		</Cursor>
-	</File>
-	<File name="graphics.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="912" topLine="12" />
-		</Cursor>
-	</File>
-	<File name="sound.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="124" topLine="18" />
-		</Cursor>
-	</File>
-	<File name="menu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7476" topLine="75" />
+			<Cursor1 position="12397" topLine="160" />
 		</Cursor>
 		<Folding>
-			<Collapse line="95" />
+			<Collapse line="21" />
+			<Collapse line="106" />
 		</Folding>
 	</File>
 	<File name="defs.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
@@ -112,13 +96,39 @@
 			<Cursor1 position="6935" topLine="37" />
 		</Cursor>
 	</File>
-	<File name="map.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="graphics.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="12397" topLine="0" />
+			<Cursor1 position="912" topLine="12" />
 		</Cursor>
-		<Folding>
-			<Collapse line="21" />
-			<Collapse line="106" />
-		</Folding>
+	</File>
+	<File name="menu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7355" topLine="142" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2099" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="input.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="713" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="entity.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3113" topLine="52" />
+		</Cursor>
+	</File>
+	<File name="sprite.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1541" topLine="18" />
+		</Cursor>
+	</File>
+	<File name="sound.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="124" topLine="15" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

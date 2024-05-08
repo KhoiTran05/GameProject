@@ -54,6 +54,9 @@ struct Menu{
     }
 
     void doMenu1(Game& game, Sound& sound){
+        if ( sound.musicPlaying() && game.soundStatus != 0) sound.stopMusic();
+        game.soundStatus = 0;
+        if ( !sound.musicPlaying()) sound.playMusic(bgMusic);
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
 //        cout << mouse_x << " " << mouse_y << endl;
@@ -87,9 +90,6 @@ struct Menu{
                 }
                 break;
             }
-            if (!sound.musicPlaying()){
-                sound.playMusic(bgMusic);
-            }
         }
     }
 
@@ -108,6 +108,9 @@ struct Menu{
     }
 
     void doMenu2(Game& game, Sound& sound){
+        if ( sound.musicPlaying() && game.soundStatus != 0) sound.stopMusic();
+        game.soundStatus = 0;
+        if ( !sound.musicPlaying()) sound.playMusic(bgMusic);
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
 //        cout << mouse_x << " " << mouse_y << endl;
@@ -128,9 +131,6 @@ struct Menu{
                 break;
             }
         }
-        if (!sound.musicPlaying()){
-            sound.playMusic(bgMusic);
-        }
 
     }
 
@@ -143,6 +143,9 @@ struct Menu{
     }
 
     void doMenu3(Game& game, Sound& sound){
+        if ( sound.musicPlaying() && game.soundStatus != 0) sound.stopMusic();
+        game.soundStatus = 0;
+        if ( !sound.musicPlaying()) sound.playMusic(bgMusic);
         SDL_Event event;
         SDL_GetMouseState(&mouse_x, &mouse_y);
 //        cout << mouse_x << " " << mouse_y << endl;
@@ -155,9 +158,6 @@ struct Menu{
                 game.gameStatus = 0;
                 break;
             }
-        }
-        if (!sound.musicPlaying()){
-            sound.playMusic(bgMusic);
         }
     }
 
