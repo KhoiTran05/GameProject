@@ -14,13 +14,14 @@ using namespace std;
 
 struct Menu{
     int menuStatus, mouse_x, mouse_y;
-    SDL_Texture* startBackground, *borderTexture, *titleTextTexture, *startTextTexture, *helpTextTexture, *exitTextTexture, *menuTextTexture, *deadTextTexture, *deadBackground, *helpBackground, *instructTextTexture;
+    SDL_Texture* startBackground, *borderTexture, *titleTextTexture, *startTextTexture, *helpTextTexture, *exitTextTexture, *menuTextTexture, *menuTextTexture2, *deadTextTexture, *deadBackground, *helpBackground, *instructTextTexture, *endBackground, *endTextTexture;
     SDL_Texture* aButton, *dButton, *wButton, *jButton, *kButton, *spaceButton, *moveTextTexture, *climbTextTexture, *attackTextTexture, *dashTextTexture, *jumpTextTexture, *clickTextTexture;
-    SDL_Color titleTextColor, startTextColor, helpTextColor, exitTextColor, menuTextColor, instructTextColor;
+    SDL_Color titleTextColor, startTextColor, helpTextColor, exitTextColor, menuTextColor, menuTextColor2, instructTextColor;
     TTF_Font* titleTextFont, *textFont, *instructFont, *buttonFont;
     Mix_Music* bgMusic;
 
     void init(Graphics& graphic, Sound& sound){
+        endBackground = graphic.loadTexture("Image//EndBg.png");
         startBackground = graphic.loadTexture("Image//StartBg.png");
         deadBackground = graphic.loadTexture("Image//DeadBG.png");
         borderTexture = graphic.loadTexture("Image//Border.png");
@@ -33,8 +34,10 @@ struct Menu{
         helpTextColor = { 255, 255, 255, 255};
         exitTextColor = { 255, 255, 255, 255};
         menuTextColor = { 255, 255, 255, 255};
+        menuTextColor2 = { 255, 255, 255, 255};
         instructTextColor = {255, 255, 255, 255};
         titleTextTexture = graphic.loadTextTexture("Great Wizard", titleTextColor, titleTextFont);
+        endTextTexture = graphic.loadTextTexture("You Win", titleTextColor, titleTextFont);
         deadTextTexture = graphic.loadTextTexture("You Died", titleTextColor, titleTextFont);
         helpBackground = graphic.loadTexture("Image//01.jpg");
         instructTextTexture = graphic.loadTextTexture("There are total of 3 stages. Kill monsters and collect keys to go to the next stage", instructTextColor, instructFont);
@@ -176,6 +179,41 @@ struct Menu{
         graphic.renderTexture(jumpTextTexture, nullptr, 250, 520);
         graphic.renderTexture(attackTextTexture, nullptr, 250, 620);
         graphic.renderTexture(clickTextTexture, nullptr, 800, 670);
+    }
+
+    void doMenu4(Game& game, Sound& sound){
+//        if ( sound.musicPlaying() && game.soundStatus != 0) sound.stopMusic();
+//        game.soundStatus = 0;
+//        if ( !sound.musicPlaying()) sound.playMusic(bgMusic);
+        SDL_Event event;
+        SDL_GetMouseState(&mouse_x, &mouse_y);
+//        cout << mouse_x << " " << mouse_y << endl;
+        if ( mouse_x >= 570 && mouse_x <= 715 && mouse_y >= 420 && mouse_y <= 460){
+            menuTextColor2 = {0, 0, 0, 0};
+        }
+        else menuTextColor2 = {255, 255, 255, 255};
+
+        while (SDL_PollEvent(&event)){
+            switch(event.type){
+            case SDL_QUIT:
+                exit(0);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if ( mouse_x >= 575 && mouse_x <= 700 && mouse_y >= 420 && mouse_y <= 460){
+                   game.gameStatus = 0;
+                }
+                break;
+            }
+        }
+
+    }
+
+    void drawMenu4(Graphics& graphic){
+        menuTextTexture2 = graphic.loadTextTexture("Menu", menuTextColor2, textFont);
+        graphic.renderTexture(endBackground, nullptr, 0, 0);
+        graphic.renderTexture(endTextTexture, nullptr, 370, 100);
+        graphic.renderTexture(borderTexture, nullptr, SCREEN_WIDTH/2-150, SCREEN_HEIGHT/2+40);
+        graphic.renderTexture(menuTextTexture2, nullptr, 570, 416);
     }
 };
 #endif // _MENU__H

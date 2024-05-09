@@ -48,11 +48,15 @@ int main(int argc, char *argv[]){
             menu.doMenu3(game, sound);
             menu.drawMenu3(graphic);
         }
+        if ( game.gameStatus == 8){
+            menu.doMenu4(game, sound);
+            menu.drawMenu4(graphic);
+        }
         input.getInput();
         if ( game.gameStatus == 1){
             first_stage.drawMap1(graphic);
             game.doStage1(input.keyboard, first_stage, sound);
-            game.drawGame(graphic);
+            game.drawGame(graphic, sound);
         }
         if ( game.gameStatus == 2){
             game.init2();
@@ -61,7 +65,7 @@ int main(int argc, char *argv[]){
         if ( game.gameStatus == 3){
             second_stage.drawMap2(graphic);
             game.doStage2(input.keyboard, second_stage, sound);
-            game.drawGame2(graphic);
+            game.drawGame2(graphic, sound);
         }
         if (game.gameStatus == 4){
             game.init2();

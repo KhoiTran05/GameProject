@@ -18,14 +18,14 @@ struct Game{
     Entity spikeTrap1, spikeTrap2, spikeTrap3, spikeTrap4, spikeTrap5, spearTrap1, spearTrap2, shooter1, shooter2, shooter3, shooter4, spell;
     list<Entity*> skills, bullets_1, bullets_2, bullets_3, bullets_4, bullets_5, arrow1, arrow2, arrow3, arrow4, swords1, bombs1, swords2, bombs2, bossSkills;
     SDL_Texture* skillTexture, *enemyBulletTexture_1, *enemyBulletTexture_2, *healthBar[11], *keyTextTexure, *keyTexture, *portalTexture, *arrowTexture, *swordTexture, *bombTexture, *bossSkillTexture1, *bossHealthTextTexrture;
-    SDL_Texture* warningTextTexture, *healthTexture, *bossNameTexture, *timeTexture, *spellTexture1, *spellTexture2;
+    SDL_Texture* warningTextTexture, *suggestTextTexture1, *suggestTextTexture2, *healthTexture, *bossNameTexture, *timeTexture, *spellTexture1, *spellTexture2;
     SDL_Color textColor, healthTextColor, nameColor;
     TTF_Font* textFont, *textFont2;
-    stringstream keyText1, keyText2, bossHealthText, bossName, timeText, warningText;
-    int keyCount1, keyCount2, gameStatus = 4, jumpCount = 0, soundStatus = 0;
+    stringstream keyText1, keyText2, bossHealthText, bossName, timeText, warningText, suggestText1, suggestText2;
+    int keyCount1, keyCount2, gameStatus = 0, jumpCount = 0, soundStatus = 0;
     Uint32 lastTrapDropTime1 = 0, lastTrapDropTime1_1 = 0, lastTrapDropTime2 = 0, lastTrapDropTime2_1 = 0, arrowSpawnTime1 = 0, arrowSpawnTime2 = 0, arrowSpawnTime3 = 0, arrowSpawnTime4 = 0, swordSpawnTime = 0, swordSpawnTime2 = 0, bombSpawnTime = 0, bombSpawnTime2 = 0, bossSkillSpawnTime, spellSpawnTime, time;
     Uint32 dashReloadTime = 0, skillReloadTime = 0;
-    Mix_Chunk* angelAttack1, *angelAttack2, *bossAttack, *bossSpell, *flyingEyeAttack, *skeletonAttack, *playerAttack, *playerRun, *playerJump;
+    Mix_Chunk* angelAttack1, *angelAttack2, *bossAttack, *bossSpell, *flyingEyeAttack, *skeletonAttack, *playerAttack, *playerRun, *playerJump, *collectKey;
     Mix_Music* stage1, *stage2, *stage3;
 
     void init(Graphics& graphic, Sound& sound){
@@ -198,10 +198,10 @@ struct Game{
         stage1 = sound.loadMusic("Sound//Stage1.wav");
         stage2 = sound.loadMusic("Sound//Stage2.wav");
         stage3 = sound.loadMusic("Sound//Stage3.wav");
+        collectKey = sound.loadSoundEffect("Sound//CollectKey.wav");
     }
 
     void init2(){
-        initPlayer();
         initPlayer();
         initFirstAngel();
         initSecondAngel();
@@ -1423,7 +1423,7 @@ struct Game{
     }
 
 
-    void doBoss(){
+    void doBoss(Sound sound){
         if ( boss.x+160 >= player.x ) boss.flip = SDL_FLIP_NONE;
         else{
             boss.flip = SDL_FLIP_HORIZONTAL;
@@ -1466,14 +1466,17 @@ struct Game{
             }
         }
 
-        if (boss.attackStatus == 1 && boss.attackSprite.frame == 20 && boss.collide(&player) ){
-            if ( boss.flip == SDL_FLIP_NONE){
-                player.health--;
-                player.x -= 30;
-            }
-            else{
-                player.health--;
-                player.x += 30;
+        if (boss.attackStatus == 1 && boss.attackSprite.frame == 20 ){
+            sound.playSoundEffect(bossAttack);
+            if ( boss.collide(&player) ){
+                if ( boss.flip == SDL_FLIP_NONE){
+                    player.health--;
+                    player.x -= 30;
+                }
+                else{
+                    player.health--;
+                    player.x += 30;
+                }
             }
         }
     }
@@ -1683,11 +1686,11 @@ struct Game{
             arrowSpawnTime4 = SDL_GetTicks();
         }
         doArrow4();
-        if ( SDL_GetTicks() - swordSpawnTime >= 1170 && skeleton1.attackStatus == 1){
+        if ( SDL_GetTicks() - swordSpawnTime >= 1200 && skeleton1.attackStatus == 1){
             initSword1(sound);
             swordSpawnTime = SDL_GetTicks();
         }
-        if ( SDL_GetTicks() - swordSpawnTime2>= 1170 && skeleton2.attackStatus == 1){
+        if ( SDL_GetTicks() - swordSpawnTime2>= 1200 && skeleton2.attackStatus == 1){
             initSword2(sound);
             swordSpawnTime2 = SDL_GetTicks();
         }
@@ -1695,11 +1698,11 @@ struct Game{
         doSword2();
         doSkeleton();
         doSkeleton2();
-        if ( SDL_GetTicks() - bombSpawnTime >= 1170 && flyingEye1.attackStatus == 1){
+        if ( SDL_GetTicks() - bombSpawnTime >= 1200 && flyingEye1.attackStatus == 1){
             initBomb1(sound);
             bombSpawnTime = SDL_GetTicks();
         }
-        if ( SDL_GetTicks() - bombSpawnTime2 >= 1170 && flyingEye2.attackStatus == 1){
+        if ( SDL_GetTicks() - bombSpawnTime2 >= 1200 && flyingEye2.attackStatus == 1){
             initBomb2(sound);
             bombSpawnTime2 = SDL_GetTicks();
         }
@@ -1721,11 +1724,12 @@ struct Game{
         }
         doPlayer(keyInput, gameMap, sound);
         doSkill();
-        doBoss();
+        doBoss(sound);
         if ( player.health == 0) gameStatus = 6;
+        if ( boss.health == 0) gameStatus = 8;
     }
 
-    void drawGame(Graphics& graphic){
+    void drawGame(Graphics& graphic, Sound sound){
         if ( angel_1.health > 0){
             if (angel_1.attackStatus == 2) angel_1.hurtSprite.doQuickSprite2(graphic, ANGEL_HURT_FRAMES, angel_1.x, angel_1.y, angel_1.flip);
             else if (angel_1.attackStatus == 1) angel_1.attackSprite.doSlowSprite4(graphic, ANGEL_ATTACK_FRAMES, angel_1.x, angel_1.y, angel_1.flip);
@@ -1740,6 +1744,7 @@ struct Game{
             if ( key_1.health == 1 ) key_1.idleSprite.doSprite(graphic, KEY_FRAMES, angel_1.x+20, angel_1.y+5);
             if ( key_1.health == 1 && (( player.x + player.w >=  angel_1.x + 20 && player.x + player.w <= angel_1.x + 35 && player.flipStatus == 0) || ( player.x >=  angel_1.x + 20 && player.x <= angel_1.x + 35 && player.flipStatus == 1))){
                 keyCount1++;
+                sound.playSoundEffect(collectKey);
                 key_1.health = 0;
             }
         }
@@ -1758,6 +1763,7 @@ struct Game{
             if ( key_2.health == 1) key_2.idleSprite.doSprite(graphic, KEY_FRAMES, angel_2.x+20, angel_2.y+5);
             if ( key_2.health == 1 && (( player.x + player.w >=  angel_2.x + 20 && player.x + player.w <= angel_2.x + 35 && player.flipStatus == 0) || ( player.x >=  angel_2.x + 20 && player.x <= angel_2.x + 35 && player.flipStatus == 1))){
                 keyCount1++;
+                sound.playSoundEffect(collectKey);
                 key_2.health = 0;
             }
         }
@@ -1776,6 +1782,7 @@ struct Game{
             if ( key_3.health == 1) key_3.idleSprite.doSprite(graphic, KEY_FRAMES, angel_3.x+20, angel_3.y+5);
             if ( key_3.health == 1 && (( player.x + player.w >=  angel_3.x + 20 && player.x + player.w <= angel_3.x + 35 && player.flipStatus == 0) || ( player.x >=  angel_3.x + 20 && player.x <= angel_3.x + 35 && player.flipStatus == 1))){
                 keyCount1++;
+                sound.playSoundEffect(collectKey);
                 key_3.health = 0;
             }
         }
@@ -1794,6 +1801,7 @@ struct Game{
             if ( key_4.health == 1) key_4.idleSprite.doSprite(graphic, KEY_FRAMES, angel_4.x+20, angel_4.y+5);
             if ( key_4.health == 1 && (( player.x + player.w >=  angel_4.x + 20 && player.x + player.w <= angel_4.x + 35 && player.flipStatus == 0) || ( player.x >=  angel_4.x + 20 && player.x <= angel_4.x + 35 && player.flipStatus == 1))){
                 keyCount1++;
+                sound.playSoundEffect(collectKey);
                 key_4.health = 0;
             }
         }
@@ -1812,6 +1820,7 @@ struct Game{
             if ( key_5.health == 1) key_5.idleSprite.doSprite(graphic, KEY_FRAMES, angel_5.x+20, angel_5.y+5);
             if ( key_5.health == 1 && (( player.x + player.w >=  angel_5.x + 20 && player.x + player.w <= angel_5.x + 35 && player.flipStatus == 0) || ( player.x >=  angel_5.x + 20 && player.x <= angel_5.x + 35 && player.flipStatus == 1))){
                 keyCount1++;
+                sound.playSoundEffect(collectKey);
                 key_5.health = 0;
             }
         }
@@ -1891,7 +1900,7 @@ struct Game{
     }
 
 
-    void drawGame2(Graphics& graphic){
+    void drawGame2(Graphics& graphic, Sound sound){
         spikeTrap1.idleSprite.doSprite(graphic, SPIKE_TRAP_FRAMES, spikeTrap1.x, spikeTrap1.y);
         spikeTrap2.idleSprite.doSprite(graphic, SPIKE_TRAP_FRAMES, spikeTrap2.x, spikeTrap2.y);
         spikeTrap3.idleSprite.doSprite(graphic, SPIKE_TRAP_FRAMES, spikeTrap3.x, spikeTrap3.y);
@@ -1923,6 +1932,7 @@ struct Game{
             if ( key_6.health == 1 ) key_6.idleSprite.doSprite(graphic, KEY_FRAMES, skeleton1.x+20, skeleton1.y-10);
             if ( key_6.health == 1 && (( player.x + player.w >=  skeleton1.x + 20 && player.x + player.w <= skeleton1.x + 35 && player.flipStatus == 0) || ( player.x >=  skeleton1.x + 20 && player.x <= skeleton1.x + 35 && player.flipStatus == 1))){
                 keyCount2++;
+                sound.playSoundEffect(collectKey);
                 key_6.health = 0;
             }
         }
@@ -1942,6 +1952,7 @@ struct Game{
             if ( key_8.health == 1 ) key_8.idleSprite.doSprite(graphic, KEY_FRAMES, skeleton2.x+20, skeleton2.y-10);
             if ( key_8.health == 1 && (( player.x + player.w >=  skeleton2.x + 20 && player.x + player.w <= skeleton2.x + 35 && player.flipStatus == 0) || ( player.x >=  skeleton2.x + 20 && player.x <= skeleton2.x + 35 && player.flipStatus == 1))){
                 keyCount2++;
+                sound.playSoundEffect(collectKey);
                 key_8.health = 0;
             }
         }
@@ -1960,6 +1971,7 @@ struct Game{
             if ( key_7.health == 1 ) key_7.idleSprite.doSprite(graphic, KEY_FRAMES, flyingEye1.x+20, skeleton1.y-10);
             if ( key_7.health == 1 && (( player.x + player.w >=  flyingEye1.x + 20 && player.x + player.w <= flyingEye1.x + 35 && player.flipStatus == 0) || ( player.x >=  flyingEye1.x + 20 && player.x <= flyingEye1.x + 35 && player.flipStatus == 1))){
                 keyCount2++;
+                sound.playSoundEffect(collectKey);
                 key_7.health = 0;
             }
         }
@@ -1978,6 +1990,7 @@ struct Game{
             if ( key_9.health == 1 ) key_9.idleSprite.doSprite(graphic, KEY_FRAMES, flyingEye2.x+20, flyingEye2.y-10);
             if ( key_9.health == 1 && (( player.x + player.w >=  flyingEye2.x + 20 && player.x + player.w <= flyingEye2.x + 35 && player.flipStatus == 0) || ( player.x >=  flyingEye2.x + 20 && player.x <= flyingEye2.x + 35 && player.flipStatus == 1))){
                 keyCount2++;
+                sound.playSoundEffect(collectKey);
                 key_9.health = 0;
             }
         }
@@ -2089,7 +2102,6 @@ struct Game{
             if ( boss.attackStatus == 2 ) boss.hurtSprite.doSlowSprite3(graphic, BOSS_HURT_FRAMES, boss.x, boss.y, boss.flip);
             else if (boss.attackStatus == 1){
                 boss.attackSprite.doSprite(graphic, BOSS_ATTACK_FRAMES, boss.x, boss.y, boss.flip);
-            sound.playSoundEffect(bossAttack);
             }
             else if (boss.attackStatus == 3) boss.castSprite.doSlowSprite2(graphic, BOSS_CAST_FRAMES, boss.x, boss.y, boss.flip);
             else if (boss.moveStatus == 1) boss.runSprite.doSlowSprite2(graphic, BOSS_WALK_FRAMES, boss.x, boss.y, boss.flip);
@@ -2108,7 +2120,7 @@ struct Game{
                 initSpell(sound);
 //            if ( spell.attackSprite.frame == 0 ) spellSpawnTime = SDL_GetTicks();
             }
-            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6700){
+            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6550){
                 sound.playSoundEffect(bossSpell);
                 spell.attackSprite.doSprite(graphic, BOSS_SPELL_FRAMES, spell.x, spell.y);
                 if ( spell.collide(&player) && spell.attackSprite.frame == 36) player.health--;
@@ -2120,7 +2132,7 @@ struct Game{
                 initSpell(sound);
 //            if ( spell.attackSprite.frame == 0 ) spellSpawnTime = SDL_GetTicks();
             }
-            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6700){
+            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6550){
                 sound.playSoundEffect(bossSpell);
                 spell.castSprite.doSprite(graphic, BOSS_SPELL_FRAMES, spell.x, spell.y);
                 if ( spell.collide(&player) && spell.castSprite.frame == 36) player.health--;
@@ -2145,6 +2157,18 @@ struct Game{
         warningTextTexture = graphic.loadTextTexture(warningText.str().c_str(), healthTextColor, textFont2);
         if ( SDL_GetTicks() - time >= 38000 && SDL_GetTicks() - time <= 43000){
             graphic.renderTexture(warningTextTexture, nullptr, 450, 80);
+        }
+        suggestText1.str("");
+        suggestText1 << "Remember to use dash!!!";
+        suggestTextTexture1 = graphic.loadTextTexture(suggestText1.str().c_str(), healthTextColor, textFont2);
+        if ( SDL_GetTicks() - time >= 5000 && SDL_GetTicks() - time <= 10000){
+            graphic.renderTexture(suggestTextTexture1, nullptr, 470, 80);
+        }
+        suggestText2.str("");
+        suggestText2 << "The spell appears unpredictably!!!Be careful";
+        suggestTextTexture2 = graphic.loadTextTexture(suggestText2.str().c_str(), healthTextColor, textFont2);
+        if ( SDL_GetTicks() - time >= 10000 && SDL_GetTicks() - time <= 15000){
+            graphic.renderTexture(suggestTextTexture2, nullptr, 360, 80);
         }
     }
 };

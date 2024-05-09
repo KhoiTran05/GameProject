@@ -2,11 +2,27 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="graphics.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="912" topLine="78" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1442" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="sound.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="17" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="game.h" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="91352" topLine="459" />
+			<Cursor1 position="224" topLine="0" />
 		</Cursor>
 		<Folding>
+			<Collapse line="203" />
 			<Collapse line="239" />
 			<Collapse line="245" />
 			<Collapse line="276" />
@@ -64,22 +80,18 @@
 			<Collapse line="1361" />
 			<Collapse line="1382" />
 			<Collapse line="1403" />
-			<Collapse line="1425" />
-			<Collapse line="1479" />
-			<Collapse line="1499" />
-			<Collapse line="1519" />
-			<Collapse line="1539" />
-			<Collapse line="1558" />
-			<Collapse line="1565" />
-			<Collapse line="1572" />
-			<Collapse line="1579" />
-			<Collapse line="1586" />
-			<Collapse line="1593" />
-			<Collapse line="1601" />
-			<Collapse line="1608" />
-			<Collapse line="1644" />
-			<Collapse line="1727" />
-			<Collapse line="1893" />
+			<Collapse line="1482" />
+			<Collapse line="1502" />
+			<Collapse line="1522" />
+			<Collapse line="1542" />
+			<Collapse line="1561" />
+			<Collapse line="1568" />
+			<Collapse line="1575" />
+			<Collapse line="1582" />
+			<Collapse line="1589" />
+			<Collapse line="1596" />
+			<Collapse line="1604" />
+			<Collapse line="1611" />
 		</Folding>
 	</File>
 	<File name="map.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
@@ -91,34 +103,23 @@
 			<Collapse line="106" />
 		</Folding>
 	</File>
-	<File name="defs.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6935" topLine="37" />
-		</Cursor>
-	</File>
-	<File name="graphics.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="912" topLine="12" />
-		</Cursor>
-	</File>
-	<File name="menu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7355" topLine="142" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2099" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="input.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="713" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="entity.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+	<File name="menu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3113" topLine="52" />
+			<Cursor1 position="9587" topLine="131" />
+		</Cursor>
+		<Folding>
+			<Collapse line="58" />
+			<Collapse line="98" />
+		</Folding>
+	</File>
+	<File name="defs.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6935" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="sprite.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
@@ -126,9 +127,9 @@
 			<Cursor1 position="1541" topLine="18" />
 		</Cursor>
 	</File>
-	<File name="sound.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="entity.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="124" topLine="15" />
+			<Cursor1 position="3113" topLine="52" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

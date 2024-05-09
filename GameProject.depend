@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1715184322 source:c:\users\admin\onedrive\documents\ltnc\gameproject\main.cpp
+1715254657 source:c:\users\admin\onedrive\documents\ltnc\gameproject\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -32,7 +32,7 @@
 	<SDL.h>
 	"defs.h"
 
-1715184714 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
+1715256302 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -54,7 +54,7 @@
 	"graphics.h"
 	"defs.h"
 
-1715180257 c:\users\admin\onedrive\documents\ltnc\gameproject\menu.h
+1715249058 c:\users\admin\onedrive\documents\ltnc\gameproject\menu.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
