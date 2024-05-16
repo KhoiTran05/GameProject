@@ -19,7 +19,7 @@
 	<SDL_ttf.h>
 	"defs.h"
 
-1714292712 c:\users\admin\onedrive\documents\ltnc\gameproject\defs.h
+1715845629 c:\users\admin\onedrive\documents\ltnc\gameproject\defs.h
 
 1715159399 c:\users\admin\onedrive\documents\ltnc\gameproject\map.h
 	<SDL.h>
@@ -32,7 +32,7 @@
 	<SDL.h>
 	"defs.h"
 
-1715256302 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
+1715759678 c:\users\admin\onedrive\documents\ltnc\gameproject\game.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
