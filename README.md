@@ -3,10 +3,10 @@
 
 # Information
 
-Name: Trần Lê Minh Khôi
-Student ID: 23021603
-Class: K68CA1
-Email: khoitrlmn@gmail.com
+Name: Trần Lê Minh Khôi  
+Student ID: 23021603  
+Class: K68CA1  
+Email: khoitrlmn@gmail.com  
 
 # Gameplay
 
