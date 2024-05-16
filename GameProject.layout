@@ -2,21 +2,6 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1442" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="sound.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="input.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="713" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="map.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="12397" topLine="160" />
@@ -26,9 +11,14 @@
 			<Collapse line="106" />
 		</Folding>
 	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2041" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="game.h" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1134" topLine="405" />
+			<Cursor1 position="1478" topLine="6" />
 		</Cursor>
 		<Folding>
 			<Collapse line="247" />
@@ -48,10 +38,6 @@
 			<Collapse line="531" />
 			<Collapse line="551" />
 			<Collapse line="571" />
-			<Collapse line="591" />
-			<Collapse line="609" />
-			<Collapse line="627" />
-			<Collapse line="645" />
 			<Collapse line="663" />
 			<Collapse line="676" />
 			<Collapse line="689" />
@@ -100,6 +86,15 @@
 			<Collapse line="1621" />
 		</Folding>
 	</File>
+	<File name="menu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3235" topLine="7" />
+		</Cursor>
+		<Folding>
+			<Collapse line="58" />
+			<Collapse line="98" />
+		</Folding>
+	</File>
 	<File name="defs.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="123" topLine="0" />
@@ -107,17 +102,13 @@
 	</File>
 	<File name="graphics.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="912" topLine="0" />
+			<Cursor1 position="912" topLine="43" />
 		</Cursor>
 	</File>
-	<File name="menu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="sound.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3235" topLine="34" />
+			<Cursor1 position="0" topLine="9" />
 		</Cursor>
-		<Folding>
-			<Collapse line="58" />
-			<Collapse line="98" />
-		</Folding>
 	</File>
 	<File name="entity.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
@@ -127,6 +118,11 @@
 	<File name="sprite.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1541" topLine="18" />
+		</Cursor>
+	</File>
+	<File name="input.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="713" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

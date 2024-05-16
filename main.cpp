@@ -79,5 +79,6 @@ int main(int argc, char *argv[]){
         }
         graphic.presentScene();
     }
+    graphic.close();
     return 0;
 }

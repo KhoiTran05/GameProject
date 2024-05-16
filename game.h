@@ -594,8 +594,8 @@ struct Game{
         swords1.push_back(sword);
         sword->attackSprite.spriteSheetTexture = swordTexture;
         sword->attackSprite.init(SWORD_CLIPS, SWORD_FRAMES);
-        if ( skeleton1.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton1.x - 40;
-        else sword->x = skeleton1.x + 80;
+        if ( skeleton1.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton1.x - 30;
+        else sword->x = skeleton1.x + 40;
         sword->y = skeleton1.y + (skeleton1.h - sword->h)/2 - 20;
         sword->w = 33;
         sword->h = 33;
@@ -612,8 +612,8 @@ struct Game{
         swords2.push_back(sword);
         sword->attackSprite.spriteSheetTexture = swordTexture;
         sword->attackSprite.init(SWORD_CLIPS, SWORD_FRAMES);
-        if ( skeleton2.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton2.x - 40;
-        else sword->x = skeleton2.x + 80;
+        if ( skeleton2.flip == SDL_FLIP_HORIZONTAL) sword->x = skeleton2.x - 30;
+        else sword->x = skeleton2.x + 40;
         sword->y = skeleton2.y + (skeleton2.h - sword->h)/2 - 20;
         sword->w = 33;
         sword->h = 33;
@@ -630,8 +630,8 @@ struct Game{
         bombs1.push_back(bomb);
         bomb->attackSprite.spriteSheetTexture = bombTexture;
         bomb->attackSprite.init(BOMB_CLIPS, BOMB_FRAMES);
-        if ( flyingEye1.flip == SDL_FLIP_HORIZONTAL) bomb->x = flyingEye1.x - 40;
-        else bomb->x = flyingEye1.x + 60;
+        if ( flyingEye1.flip == SDL_FLIP_HORIZONTAL) bomb->x = flyingEye1.x - 30;
+        else bomb->x = flyingEye1.x + 40;
         bomb->y = 380;
         bomb->w = 35;
         bomb->h = 35;
@@ -648,8 +648,8 @@ struct Game{
         bombs2.push_back(bomb);
         bomb->attackSprite.spriteSheetTexture = bombTexture;
         bomb->attackSprite.init(BOMB_CLIPS, BOMB_FRAMES);
-        if ( flyingEye2.flip == SDL_FLIP_HORIZONTAL) bomb->x = flyingEye2.x - 40;
-        else bomb->x = flyingEye2.x + 60;
+        if ( flyingEye2.flip == SDL_FLIP_HORIZONTAL) bomb->x = flyingEye2.x - 30;
+        else bomb->x = flyingEye2.x + 40;
         bomb->y = 124;
         bomb->w = 35;
         bomb->h = 35;
