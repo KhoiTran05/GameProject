@@ -17,7 +17,7 @@ Great Wizard has total of 3 stages. At each stage, you have to beat all monsters
 - A, D, W keys to move
 - Space key to jump
 - J key to attack
-- K key to dash ( Only in final stage)
+- K key to dash
 
 # Remarkable features
 

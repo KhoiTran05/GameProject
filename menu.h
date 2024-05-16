@@ -51,7 +51,7 @@ struct Menu{
         climbTextTexture = graphic.loadTextTexture("Climb", instructTextColor, buttonFont);
         jumpTextTexture = graphic.loadTextTexture("Jump", instructTextColor, buttonFont);
         attackTextTexture = graphic.loadTextTexture("Attack", instructTextColor, buttonFont);
-        dashTextTexture = graphic.loadTextTexture("Dash (Only in final stage)", instructTextColor, buttonFont);
+        dashTextTexture = graphic.loadTextTexture("Dash", instructTextColor, buttonFont);
         clickTextTexture = graphic.loadTextTexture("Click anywhere to back to menu", instructTextColor, instructFont);
         bgMusic = sound.loadMusic("Sound//Background.mp3");
     }

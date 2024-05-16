@@ -235,9 +235,11 @@ struct Game{
         key_9.health = 1;
         keyCount1 = 0;
         keyCount2 = 0;
+        dashReloadTime = 0;
     }
 
     void init3(){
+        dashReloadTime = 0;
         bossSkillSpawnTime = 0;
         spellSpawnTime = 0;
         time = SDL_GetTicks();
@@ -790,7 +792,8 @@ struct Game{
         if ( gameStatus == 1){
             if ( player.y >= 617) player.health = 0;
         }
-        if ( gameStatus == 5){
+
+        if ( gameStatus == 1 || gameStatus == 5){
             if (keyInput[SDL_SCANCODE_K] && SDL_GetTicks() - dashReloadTime >= 2000){
                 if ( player.flip == SDL_FLIP_NONE){
                     player.x += 100;
@@ -800,8 +803,6 @@ struct Game{
                 }
                 dashReloadTime= SDL_GetTicks();
             }
-        }
-        if ( gameStatus == 1 || gameStatus == 5){
             if (keyInput[SDL_SCANCODE_D]){
                 player.x += PLAYER_RUN_SPEED;
                 player.flip = SDL_FLIP_NONE;
@@ -816,6 +817,15 @@ struct Game{
 //            player.verticalCollide1(gameMap);
         }
         else if ( gameStatus == 3){
+            if (keyInput[SDL_SCANCODE_K] && SDL_GetTicks() - dashReloadTime >= 2000){
+                if ( player.flip == SDL_FLIP_NONE){
+                    player.x += 100;
+                }
+                else{
+                    player.x -= 100;
+                }
+                dashReloadTime= SDL_GetTicks();
+            }
             if (keyInput[SDL_SCANCODE_D]){
                 player.x += PLAYER_RUN_SPEED;
                 player.flip = SDL_FLIP_NONE;
@@ -2120,7 +2130,7 @@ struct Game{
                 initSpell(sound);
 //            if ( spell.attackSprite.frame == 0 ) spellSpawnTime = SDL_GetTicks();
             }
-            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6550){
+            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6200){
                 sound.playSoundEffect(bossSpell);
                 spell.attackSprite.doSprite(graphic, BOSS_SPELL_FRAMES, spell.x, spell.y);
                 if ( spell.collide(&player) && spell.attackSprite.frame == 36) player.health--;
@@ -2132,7 +2142,7 @@ struct Game{
                 initSpell(sound);
 //            if ( spell.attackSprite.frame == 0 ) spellSpawnTime = SDL_GetTicks();
             }
-            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6550){
+            if ((SDL_GetTicks()- time - spellSpawnTime) >= 6200){
                 sound.playSoundEffect(bossSpell);
                 spell.castSprite.doSprite(graphic, BOSS_SPELL_FRAMES, spell.x, spell.y);
                 if ( spell.collide(&player) && spell.castSprite.frame == 36) player.health--;
